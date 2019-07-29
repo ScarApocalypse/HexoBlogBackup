@@ -1,0 +1,21 @@
+/* 文章中代码块的最大高度 */
+figure.highlight{
+
+    max-height:700px;
+
+}
+
+::-webkit-scrollbar-thumb {
+    box-sizing: border-box;
+    border-radius: 8px;
+    background-color: rgba(255, 255, 255, .5);
+    border:1px solid black;
+}
+::-webkit-scrollbar-thumb:hover{
+    background-color: rgba(255, 255, 255, .8);
+
+}
+
+
+
+

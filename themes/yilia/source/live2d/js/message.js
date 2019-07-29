@@ -22,81 +22,85 @@ String.prototype.renderTip = function (context) {
 
 var re = /x/;
 console.log(re);
-re.toString = function() {
+re.toString = function () {
     showMessage('哈哈，你打开了控制台，是想要看看我的秘密吗？', 5000);
     return '';
 };
-var devToolIsOpen=false;
-$(document).on("keyup",function(event){
+var devToolIsOpen = false;
+$(document).on("keyup", function (event) {
     console.log(event.keyCode);
-    if(event.keyCode==123){
+    if (event.keyCode == 123) {
         showMessage('哈哈，你打开了控制台，是想要看看我的秘密吗？', 5000);
-        if(!devToolIsOpen){
-            devToolIsOpen=true;
-        }else{
-            devToolIsOpen=false;
+        if (!devToolIsOpen) {
+            devToolIsOpen = true;
+        } else {
+            devToolIsOpen = false;
         }
-        
+
     }
 });
 
-$('.header-smart-menu').find('a').eq(0).on('click',function(){
-    scarInputText=$('.search-ipt').val();
-    scarInputText=scarInputText.slice(1);
+$('.header-smart-menu').find('a').eq(0).on('click', function () {
+    scarInputText = $('.search-ipt').val();
+    scarInputText = scarInputText.slice(1);
     console.log(scarInputText);
-    if(scarInputText){
+    if (scarInputText) {
         showMessage('正在查看标签为<span style="color:#0099cc;">「 ' + scarInputText + ' 」</span>的文章', 5000);
-    }else{
+    } else {
         showMessage('正在查看所有文章', 5000);
     }
 });
-$('.article-tag-list-item').find('.js-tag').on('click',function(){
-    if($(this).text()=='崩坏3'){
+$('.article-tag-list-item').find('.js-tag').on('click', function () {
+    if ($(this).text() == '崩坏3') {
         showMessage('难道你也是空中劈叉的清洁工?', 5000);
-    }else{
+    } else {
         showMessage('正在查看标签为<span style="color:#0099cc;">「 ' + $(this).text() + ' 」</span>的文章', 5000);
     }
-   
+
 });
 // $('.article-tag-list-item').on('mouseenter',function(){
 //     var tagText=$.trim($(this).text());
-    
+
 //     console.log(tagText);
 //     hideMessage(3000);
 //     showMessage('要察看有关'+tagText+"的文章吗", 5000);
-    
+
 // });
 
-$('.search-li').on('mouseenter',function(e){
+$('.search-li').on('mouseenter', function (e) {
     console.log(1);
-    var tagText=$.trim($(this).text());
+    var tagText = $.trim($(this).text());
     console.log(tagText);
-    showMessage('要察看有关'+tagText+"的文章吗", 5000);
+    showMessage('要察看有关' + tagText + "的文章吗", 5000);
     event.stopPropagation();
 });
-$(document).on('copy', function (){
+$(document).on('copy', function () {
     showMessage('你都复制了些什么呀，转载要记得加上出处哦~~', 5000);
 });
 
-function initTips(){
+function initTips() {
     $.ajax({
         cache: true,
         url: `${message_Path}message.json`,
         dataType: "json",
-        success: function (result){
-            $.each(result.mouseover, function (index, tips){
-                $(tips.selector).mouseover(function (){
+        success: function (result) {
+            $.each(result.mouseover, function (index, tips) {
+                $(tips.selector).mouseover(function () {
                     var text = tips.text;
-                    if(Array.isArray(tips.text)) text = tips.text[Math.floor(Math.random() * tips.text.length + 1)-1];
-                    text = text.renderTip({text: $(this).text()});
+                    if (Array.isArray(tips.text)) text = tips.text[Math.floor(Math.random() * tips.text.length + 1) - 1];
+                    text = text.renderTip({
+                        text: $(this).text()
+                    });
                     showMessage(text, 3000);
                 });
             });
-            $.each(result.click, function (index, tips){
-                $(tips.selector).click(function (){
+            $.each(result.click, function (index, tips) {
+                $(tips.selector).click(function () {
                     var text = tips.text;
-                    if(Array.isArray(tips.text)) text = tips.text[Math.floor(Math.random() * tips.text.length + 1)-1];
-                    text = text.renderTip({text: $(this).text()});
+                    if (Array.isArray(tips.text)) text = tips.text[Math.floor(Math.random() * tips.text.length + 1) - 1];
+                    text = text.renderTip({
+                        text: $(this).text()
+                    });
                     showMessage(text, 3000);
                 });
             });
@@ -105,10 +109,10 @@ function initTips(){
 }
 initTips();
 
-(function (){
+(function () {
     var text;
-    
-    if(document.referrer == ''){
+
+    if (document.referrer == '') {
         console.log(1);
         var referrer = document.createElement('a');
         referrer.href = document.referrer;
@@ -134,7 +138,7 @@ initTips();
         // } else {
         //     text = '嗨~ 快来逗我玩吧！';
         // }
-        
+
         // var domain = referrer.hostname.split('.')[1];
         // if (domain == 'baidu') {
         //     text = '嗨！ 来自 百度搜索 的朋友！<br>欢迎访问<span style="color:#0099cc;">「 ' + document.title.split(' - ')[0] + ' 」</span>';
@@ -143,11 +147,11 @@ initTips();
         // }else if (domain == 'google') {
         //     text = '嗨！ 来自 谷歌搜索 的朋友！<br>欢迎访问<span style="color:#0099cc;">「 ' + document.title.split(' - ')[0] + ' 」</span>';
         // }
-    }else{
+    } else {
         console.log(2);
-        var location=window.location.href.split('/').length;
+        var location = window.location.href.split('/').length;
         // if (window.location.href == `${home_Path}`)
-        if (location<=4) { //主页URL判断，需要斜杠结尾
+        if (location <= 4) { //主页URL判断，需要斜杠结尾
             var now = (new Date()).getHours();
             if (now > 23 || now <= 5) {
                 text = '你是夜猫子呀？这么晚还不睡觉，明天起的来嘛？';
@@ -168,24 +172,24 @@ initTips();
             } else {
                 text = '嗨~ 快来逗我玩吧！';
             }
-        }else {
-            
-            text = '欢迎阅读<span style="color:#0099cc;">「 ' + document.title.split(' - ')[0] + ' 」</span>'+'<br>右下角可以察看目录';
+        } else {
+
+            text = '欢迎阅读<span style="color:#0099cc;">「 ' + document.title.split(' - ')[0] + ' 」</span>' + '<br>右下角可以察看目录';
         }
     }
     showMessage(text, 5000);
 })();
 
-window.setInterval(showHitokoto,15000);
+window.setInterval(showHitokoto, 15000);
 
-function showHitokoto(){
-    $.getJSON('https://sslapi.hitokoto.cn/',function(result){
+function showHitokoto() {
+    $.getJSON('https://sslapi.hitokoto.cn/', function (result) {
         showMessage(result.hitokoto, 5000);
     });
 }
 
-function showMessage(text, timeout){
-    if(Array.isArray(text)) text = text[Math.floor(Math.random() * text.length + 1)-1];
+function showMessage(text, timeout) {
+    if (Array.isArray(text)) text = text[Math.floor(Math.random() * text.length + 1) - 1];
     //console.log('showMessage', text);
     $('.message').stop();
     $('.message').html(text).fadeTo(200, 1);
@@ -193,13 +197,13 @@ function showMessage(text, timeout){
     hideMessage(timeout);
 }
 
-function hideMessage(timeout){
-    $('.message').stop().css('opacity',1);
+function hideMessage(timeout) {
+    $('.message').stop().css('opacity', 1);
     if (timeout === null) timeout = 5000;
     $('.message').delay(timeout).fadeTo(200, 0);
 }
 
-function initLive2d (){
+function initLive2d() {
     $('.hide-button').fadeOut(0).on('click', () => {
         $('#landlord').css('display', 'none')
     })
@@ -209,34 +213,61 @@ function initLive2d (){
         $('.hide-button').fadeOut(600)
     })
 }
-initLive2d ();
-$('.article').hover(function(){
+initLive2d();
+$('.article').hover(function () {
     // console.log(1);
-    var location=window.location.href.split('/').length;
-    if(location<=4){
-        
-        var title=$(this).find('.article-title').text();
+    var location = window.location.href.split('/').length;
+    if (location <= 4) {
+
+        var title = $(this).find('.article-title').text();
         // console.log(title);
-        var text = '双击阅读<span style="color:#0099cc;">「 '+title +  ' 」</span>';
+        var text = '双击阅读<span style="color:#0099cc;">「 ' + title + ' 」</span>';
         showMessage(text, 1500);
-    
+
     }
     $(this).css({
         'background': 'rgba(255,255,255,1)'
     });
-},function(){
+}, function () {
     // console.log(2);
-    var location=window.location.href.split('/').length;
-    
-        $(this).css({
-            'background': 'rgba(255,255,255,.75)'
-        });
-    
-    
-}).on('dblclick',function(){
+    var location = window.location.href.split('/').length;
+
+    $(this).css({
+        'background': 'rgba(255,255,255,.75)'
+    });
+
+
+}).on('dblclick', function () {
     console.log(1);
-    window.location=$(this).find('.article-more-a')[0].href;
-   
+    window.location = $(this).find('.article-more-a')[0].href;
+
 });
 
+function ScarCopy(obj) {
+    var text = obj;
+    if (document.body.createTextRange) {
+        var range = document.body.createTextRange();
+        range.moveToElementText(text);
+        range.select();
+    } else if (window.getSelection) {
+        var selection = window.getSelection();
+        var range = document.createRange();
+        range.selectNodeContents(text);
+        selection.removeAllRanges();
+        selection.addRange(range);
+    } else {
+        alert("none");
+    }
+    document.execCommand('Copy', 'false', null);
+}
 
+
+
+$('.highlight').on('dblclick', function (e) {
+
+    ScarCopy($(this).find('.code')[0]);
+    showMessage('已经复制到剪切板', 1500);
+    e.stopPropagation();
+}).on('mouseenter', function () {
+    showMessage('双击可以复制到剪切板', 1500);
+});
