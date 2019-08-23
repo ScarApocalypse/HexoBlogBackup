@@ -4231,7 +4231,14 @@
         else {
             var n = this.modelSetting.getMotionSound(t, i),
                 s = document.createElement("audio");
+                  
             s.src = this.modelHomeDir + n, h.default.DEBUG_LOG && console.log("Start sound : " + n), s.play(), this.mainMotionManager.startMotionPrio(r, e)
+
+            var num = this.modelSetting.getMotionText(t, i);
+            console.log(num);
+            var text=TeriText[num];
+            console.log(text);
+            ScarShowMessage(text,10000);   
         }
     }, o.prototype.setExpression = function (t) {
         var i = this.expressions[t];
@@ -4258,58 +4265,149 @@
     }), i.default = r;
     var o = e(0);
     r.prototype.loadModelSetting = function (t, i) {
-        var e = this;
-        o.Live2DFramework.getPlatformManager().loadBytes(t, function (t) {
-            var r = String.fromCharCode.apply(null, new Uint8Array(t));
-            e.json = JSON.parse(r), i()
-        })
-    }, r.prototype.getTextureFile = function (t) {
-        return null == this.json[this.TEXTURES] || null == this.json[this.TEXTURES][t] ? null : this.json[this.TEXTURES][t]
-    }, r.prototype.getModelFile = function () {
-        return this.json[this.MODEL]
-    }, r.prototype.getTextureNum = function () {
-        return null == this.json[this.TEXTURES] ? 0 : this.json[this.TEXTURES].length
-    }, r.prototype.getHitAreaNum = function () {
-        return null == this.json[this.HIT_AREAS] ? 0 : this.json[this.HIT_AREAS].length
-    }, r.prototype.getHitAreaID = function (t) {
-        return null == this.json[this.HIT_AREAS] || null == this.json[this.HIT_AREAS][t] ? null : this.json[this.HIT_AREAS][t][this.ID]
-    }, r.prototype.getHitAreaName = function (t) {
-        return null == this.json[this.HIT_AREAS] || null == this.json[this.HIT_AREAS][t] ? null : this.json[this.HIT_AREAS][t][this.NAME]
-    }, r.prototype.getPhysicsFile = function () {
-        return this.json[this.PHYSICS]
-    }, r.prototype.getPoseFile = function () {
-        return this.json[this.POSE]
-    }, r.prototype.getExpressionNum = function () {
-        return null == this.json[this.EXPRESSIONS] ? 0 : this.json[this.EXPRESSIONS].length
-    }, r.prototype.getExpressionFile = function (t) {
-        return null == this.json[this.EXPRESSIONS] ? null : this.json[this.EXPRESSIONS][t][this.FILE]
-    }, r.prototype.getExpressionName = function (t) {
-        return null == this.json[this.EXPRESSIONS] ? null : this.json[this.EXPRESSIONS][t][this.NAME]
-    }, r.prototype.getLayout = function () {
-        return this.json[this.LAYOUT]
-    }, r.prototype.getHitAreasCustom = function () {
-        return this.json[this.HIT_AREAS_CUSTOM]
-    }, r.prototype.getInitParamNum = function () {
-        return null == this.json[this.INIT_PARAM] ? 0 : this.json[this.INIT_PARAM].length
-    }, r.prototype.getMotionNum = function (t) {
-        return null == this.json[this.MOTION_GROUPS] || null == this.json[this.MOTION_GROUPS][t] ? 0 : this.json[this.MOTION_GROUPS][t].length
-    }, r.prototype.getMotionFile = function (t, i) {
-        return null == this.json[this.MOTION_GROUPS] || null == this.json[this.MOTION_GROUPS][t] || null == this.json[this.MOTION_GROUPS][t][i] ? null : this.json[this.MOTION_GROUPS][t][i][this.FILE]
-    }, r.prototype.getMotionSound = function (t, i) {
-        return null == this.json[this.MOTION_GROUPS] || null == this.json[this.MOTION_GROUPS][t] || null == this.json[this.MOTION_GROUPS][t][i] || null == this.json[this.MOTION_GROUPS][t][i][this.SOUND] ? null : this.json[this.MOTION_GROUPS][t][i][this.SOUND]
-    }, r.prototype.getMotionFadeIn = function (t, i) {
-        return null == this.json[this.MOTION_GROUPS] || null == this.json[this.MOTION_GROUPS][t] || null == this.json[this.MOTION_GROUPS][t][i] || null == this.json[this.MOTION_GROUPS][t][i][this.FADE_IN] ? 1e3 : this.json[this.MOTION_GROUPS][t][i][this.FADE_IN]
-    }, r.prototype.getMotionFadeOut = function (t, i) {
-        return null == this.json[this.MOTION_GROUPS] || null == this.json[this.MOTION_GROUPS][t] || null == this.json[this.MOTION_GROUPS][t][i] || null == this.json[this.MOTION_GROUPS][t][i][this.FADE_OUT] ? 1e3 : this.json[this.MOTION_GROUPS][t][i][this.FADE_OUT]
-    }, r.prototype.getInitParamID = function (t) {
-        return null == this.json[this.INIT_PARAM] || null == this.json[this.INIT_PARAM][t] ? null : this.json[this.INIT_PARAM][t][this.ID]
-    }, r.prototype.getInitParamValue = function (t) {
-        return null == this.json[this.INIT_PARAM] || null == this.json[this.INIT_PARAM][t] ? NaN : this.json[this.INIT_PARAM][t][this.VALUE]
-    }, r.prototype.getInitPartsVisibleNum = function () {
-        return null == this.json[this.INIT_PARTS_VISIBLE] ? 0 : this.json[this.INIT_PARTS_VISIBLE].length
-    }, r.prototype.getInitPartsVisibleID = function (t) {
-        return null == this.json[this.INIT_PARTS_VISIBLE] || null == this.json[this.INIT_PARTS_VISIBLE][t] ? null : this.json[this.INIT_PARTS_VISIBLE][t][this.ID]
-    }, r.prototype.getInitPartsVisibleValue = function (t) {
-        return null == this.json[this.INIT_PARTS_VISIBLE] || null == this.json[this.INIT_PARTS_VISIBLE][t] ? NaN : this.json[this.INIT_PARTS_VISIBLE][t][this.VALUE]
-    }
+            var e = this;
+            o.Live2DFramework.getPlatformManager().loadBytes(t, function (t) {
+                var r = String.fromCharCode.apply(null, new Uint8Array(t));
+                e.json = JSON.parse(r), i()
+            })
+        }, r.prototype.getTextureFile = function (t) {
+            return null == this.json[this.TEXTURES] || null == this.json[this.TEXTURES][t] ? null : this.json[this.TEXTURES][t]
+        }, r.prototype.getModelFile = function () {
+            return this.json[this.MODEL]
+        }, r.prototype.getTextureNum = function () {
+            return null == this.json[this.TEXTURES] ? 0 : this.json[this.TEXTURES].length
+        }, r.prototype.getHitAreaNum = function () {
+            return null == this.json[this.HIT_AREAS] ? 0 : this.json[this.HIT_AREAS].length
+        }, r.prototype.getHitAreaID = function (t) {
+            return null == this.json[this.HIT_AREAS] || null == this.json[this.HIT_AREAS][t] ? null : this.json[this.HIT_AREAS][t][this.ID]
+        }, r.prototype.getHitAreaName = function (t) {
+            return null == this.json[this.HIT_AREAS] || null == this.json[this.HIT_AREAS][t] ? null : this.json[this.HIT_AREAS][t][this.NAME]
+        }, r.prototype.getPhysicsFile = function () {
+            return this.json[this.PHYSICS]
+        }, r.prototype.getPoseFile = function () {
+            return this.json[this.POSE]
+        }, r.prototype.getExpressionNum = function () {
+            return null == this.json[this.EXPRESSIONS] ? 0 : this.json[this.EXPRESSIONS].length
+        }, r.prototype.getExpressionFile = function (t) {
+            return null == this.json[this.EXPRESSIONS] ? null : this.json[this.EXPRESSIONS][t][this.FILE]
+        }, r.prototype.getExpressionName = function (t) {
+            return null == this.json[this.EXPRESSIONS] ? null : this.json[this.EXPRESSIONS][t][this.NAME]
+        }, r.prototype.getLayout = function () {
+            return this.json[this.LAYOUT]
+        }, r.prototype.getHitAreasCustom = function () {
+            return this.json[this.HIT_AREAS_CUSTOM]
+        }, r.prototype.getInitParamNum = function () {
+            return null == this.json[this.INIT_PARAM] ? 0 : this.json[this.INIT_PARAM].length
+        }, r.prototype.getMotionNum = function (t) {
+            return null == this.json[this.MOTION_GROUPS] || null == this.json[this.MOTION_GROUPS][t] ? 0 : this.json[this.MOTION_GROUPS][t].length
+        }, r.prototype.getMotionFile = function (t, i) {
+            return null == this.json[this.MOTION_GROUPS] || null == this.json[this.MOTION_GROUPS][t] || null == this.json[this.MOTION_GROUPS][t][i] ? null : this.json[this.MOTION_GROUPS][t][i][this.FILE]
+        }, r.prototype.getMotionSound = function (t, i) {
+            return null == this.json[this.MOTION_GROUPS] || null == this.json[this.MOTION_GROUPS][t] || null == this.json[this.MOTION_GROUPS][t][i] || null == this.json[this.MOTION_GROUPS][t][i][this.SOUND] ? null : this.json[this.MOTION_GROUPS][t][i][this.SOUND]
+        }, r.prototype.getMotionText = function (t, i) {
+            return null == this.json[this.MOTION_GROUPS] || null == this.json[this.MOTION_GROUPS][t] || null == this.json[this.MOTION_GROUPS][t][i] || null == this.json[this.MOTION_GROUPS][t][i]['text'] ? null : this.json[this.MOTION_GROUPS][t][i]['text']
+        },
+        r.prototype.getMotionFadeIn = function (t, i) {
+            return null == this.json[this.MOTION_GROUPS] || null == this.json[this.MOTION_GROUPS][t] || null == this.json[this.MOTION_GROUPS][t][i] || null == this.json[this.MOTION_GROUPS][t][i][this.FADE_IN] ? 1e3 : this.json[this.MOTION_GROUPS][t][i][this.FADE_IN]
+        }, r.prototype.getMotionFadeOut = function (t, i) {
+            return null == this.json[this.MOTION_GROUPS] || null == this.json[this.MOTION_GROUPS][t] || null == this.json[this.MOTION_GROUPS][t][i] || null == this.json[this.MOTION_GROUPS][t][i][this.FADE_OUT] ? 1e3 : this.json[this.MOTION_GROUPS][t][i][this.FADE_OUT]
+        }, r.prototype.getInitParamID = function (t) {
+            return null == this.json[this.INIT_PARAM] || null == this.json[this.INIT_PARAM][t] ? null : this.json[this.INIT_PARAM][t][this.ID]
+        }, r.prototype.getInitParamValue = function (t) {
+            return null == this.json[this.INIT_PARAM] || null == this.json[this.INIT_PARAM][t] ? NaN : this.json[this.INIT_PARAM][t][this.VALUE]
+        }, r.prototype.getInitPartsVisibleNum = function () {
+            return null == this.json[this.INIT_PARTS_VISIBLE] ? 0 : this.json[this.INIT_PARTS_VISIBLE].length
+        }, r.prototype.getInitPartsVisibleID = function (t) {
+            return null == this.json[this.INIT_PARTS_VISIBLE] || null == this.json[this.INIT_PARTS_VISIBLE][t] ? null : this.json[this.INIT_PARTS_VISIBLE][t][this.ID]
+        }, r.prototype.getInitPartsVisibleValue = function (t) {
+            return null == this.json[this.INIT_PARTS_VISIBLE] || null == this.json[this.INIT_PARTS_VISIBLE][t] ? NaN : this.json[this.INIT_PARTS_VISIBLE][t][this.VALUE]
+        }
 }]);
+
+// scar代码
+// 添加了getMotionText代码
+function ScarShowMessage(text, timeout) {
+    if (Array.isArray(text)) text = text[Math.floor(Math.random() * text.length + 1) - 1];
+    //console.log('showMessage', text);
+    $('.message').stop();
+    $('.message').html(text).fadeTo(200, 1);
+    if (timeout === null) timeout = 5000;
+    ScarHideMessage(timeout);
+}
+
+function ScarHideMessage(timeout) {
+    $('.message').stop().css('opacity', 1);
+    if (timeout === null) timeout = 5000;
+    $('.message').delay(timeout).fadeTo(200, 0);
+}
+var  TeriText={
+    '155060':'吼？不管你怎么摇，我都不会摇的，快点放弃吧',
+    '155061':'什么啊？我才没有觉得舒服呢',
+    '155062':'Teri，这样子拒绝我，难道是迷上我了？',
+    '155063':'如果好好加油的话，今晚就，给，你，奖，励，噢',
+    '155064':'你啊，难道想被我踩吗',
+    '155065':'终于意识到谁是最可爱的了吗？',
+    '155066':'有新消息，快点来确认啦！',
+    '155067':'还在睡呀？绝对在做奇怪的梦吧！teri teri誓約的十字架启动！一直睡下去吧',
+    '155068':'战斗？那样子求我的话，我就借你一根手指头的力量吧',
+    '155069':'吃了木瓜胸部就会变大的传言是真的吗？',
+    '155070':'喝了牛奶就会长高是真的吗？',
+    '155071':'这挑战正合我意，你也打起精神跟上来吧',
+    '155072':'兵器和人类根本的区别在于是否选择master(语境我不知道你自己改改)',
+    '155073':'我已经不是兵器了！',
+
+    '155074':'Teri Teri，参上！',
+    '155075':'好友申请来了噢，不过不会有比我更可爱的就是了',
+    '155076':'喂！已经是早上啦！睡懒觉也要有个度啊！',
+
+    '155077':'好困，是午觉时间了',
+    '155078':'真是失礼啊！我又不是小孩子！10点不睡觉也没关系！呜啊，呼~',
+}
+// var TeriSound = {}
+
+//         for (var i = 1; i <= 19; i++) {
+//             var s = document.createElement("audio");
+//             var j = i;
+//             if (i < 10) {
+//                 j = '0' + j;
+//             }
+//             s.src = 'live2d/model/Terisa_live2D-master/sound/theresa_live2d_0' + j + '.wav';
+//             var pro = '/sound/theresa_live2d_0' + j + '.wav';
+//             TeriSoundWrap.appendChild(s);
+//             TeriSound[pro] = s;
+//         }
+
+
+//         console.log(TeriSound);
+
+// function getTextByNum(num) {
+    
+//     // switch (num) {
+//     //     case 155060:
+//     //         return "吼？不管你怎么摇，我都不会摇的，快点放弃吧";
+//     //         break;
+//     //     case 155061:
+//     //         return "什么啊？我才没有觉得舒服呢";
+//     //         break;
+//     //     case 155062:
+//     //         return "teri teri，这样子拒绝我，难道是迷上我了？";
+//     //         break;
+//     //     case 155063:
+//     //         return "如果好好加油的话，今晚就，给，你，奖，励，噢";
+//     //         break;
+//     //     case 155064:
+//     //         return "你啊，难道想被我踩吗";
+//     //         break;
+//     //     case 155065:
+//     //         return "终于意识到谁是最可爱的了吗？";
+//     //         break;
+//     //     case 155066:
+//     //         return "有新消息，快点来确认啦！不好";
+//     //         break;
+//     //     case 155068:
+//     //         return "还在睡呀？绝对在做奇怪的梦吧！teri teri誓約的十字架启动！一直睡下去吧";
+//     //         break;
+//     //     default:
+//     //         return "没有"
+//     // }
+// }
